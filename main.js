@@ -2,7 +2,7 @@
 let newsList = [];
 const menus = document.querySelectorAll(".menus button");
 menus.forEach(menu =>menu.addEventListener("click",(event)=>getNewsByCategory(event)))
-let url = new URL(`https://relaxed-liger-259fb5.netlify.app/top-headlines`);
+let url = new URL(`https://refull-news.netlify.app/top-headlines`);
 
 const getNews =async()=>{ 
     let response = await fetch(url);
@@ -15,20 +15,20 @@ const getNews =async()=>{
 const getLatestNews = async () => { 
         // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
     //new URL : url 인스턴스를 새로만든다 
-    url = new URL(`https://relaxed-liger-259fb5.netlify.app/top-headlines`);
+    url = new URL(`https://refull-news.netlify.app/top-headlines`);
     getNews();
 } 
 
 const getNewsByCategory = async(event) =>{
     const category = event.target.textContent.toLowerCase();
     //console.log("category");
-    url = new URL(`https://relaxed-liger-259fb5.netlify.app/top-headlines?country=kr&category=${category}`);
+    url = new URL(`https://refull-news.netlify.app/top-headlines?country=kr&category=${category}`);
     getNews(); 
 }
 
 const getNewsByKeyword = async() =>{
     const keyword = document.getElementById("search-input").value; 
-    url = new URL(`https://relaxed-liger-259fb5.netlify.app/top-headlines?country=kr&q=${keyword}`);
+    url = new URL(`https://refull-news.netlify.app/top-headlines?country=kr&q=${keyword}`);
     getNews();
 }
 
