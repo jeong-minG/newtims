@@ -2,10 +2,17 @@
 let newsList = [];
 const menus = document.querySelectorAll(".menus button");
 menus.forEach(menu =>menu.addEventListener("click",(event)=>getNewsByCategory(event)))
-let url = new URL(`https://refull-news.netlify.app/top-headlines`);
+let url = new URL(`https://study-website-be-bbb1539aa813.herokuapp.com/top-headlines`);
+let totalResult = 0;
+let page = 1;
+const pageSize = 10;
+const groupSize = 5;
 
 const getNews =async()=>{ 
-    try{ 
+    try{  
+        url.searchParams.set("page",page); //=> $page=page
+        url.searchParams.set("pageSize",pageSize);
+        //url호출 전에 호출해야함
         let response = await fetch(url);
         let data = await response.json();
         if(response.status===200){ 
@@ -13,7 +20,9 @@ const getNews =async()=>{
                 throw new Error("No result for this search")
             }
             newsList = data.articles;
+            totalResult = data.totalResults;
             render();
+            paginationRender();
         }else{
             throw new Error(data.message);
         }
@@ -27,20 +36,20 @@ const getNews =async()=>{
 const getLatestNews = async () => { 
         // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
     //new URL : url 인스턴스를 새로만든다 
-    url = new URL(`https://refull-news.netlify.app/top-headlines`);
+    url = new URL(`https://study-website-be-bbb1539aa813.herokuapp.com/top-headlines`);
     getNews();
 } 
 
 const getNewsByCategory = async(event) =>{
     const category = event.target.textContent.toLowerCase();
     //console.log("category");
-    url = new URL(`https://refull-news.netlify.app/top-headlines?country=kr&category=${category}`);
+    url = new URL(`https://study-website-be-bbb1539aa813.herokuapp.com/top-headlines?country=kr&category=${category}`);
     getNews(); 
 }
 
 const getNewsByKeyword = async() =>{
     const keyword = document.getElementById("search-input").value; 
-    url = new URL(`https://refull-news.netlify.app/top-headlines?country=kr&q=${keyword}`);
+    url = new URL(`https://study-website-be-bbb1539aa813.herokuapp.com/top-headlines?country=kr&q=${keyword}`);
     getNews();
 }
 
@@ -71,6 +80,49 @@ const errorRender= (errorMessage) =>{
   ${errorMessage}
 </div>`
 document.getElementById("news-board").innerHTML=errorHTML;
+}
+
+
+const paginationRender=()=>{
+    //totalResult, page, pageSize, groupSize, 
+    //totalPage
+    const totalPages = Math.ceil(totalResult/pageSize);
+    //pageGroup, 
+    const pageGroup = Math.ceil(page/groupSize);
+
+    //lastPage,
+    const lastPage = pageGroup*groupSize;
+    //마지막 페이지그룹이 그룹사이즈보다 작다? 
+    if(lastPage>totalPages){
+        lastPage=totalPages;
+    }
+
+    //firstPage, 
+    const firstPage = lastPage - (groupSize-1)<=0? 1:lastPage - (groupSize-1);
+
+    let paginationHTML=``;
+
+    for(let i=firstPage;i<=lastPage;i++){
+        paginationHTML+=`<li class="page-item ${i===page? "active":''}"><a class="page-link" onclick="moveToPage(${i})">${i}</a></li>`
+    }
+
+
+    document.querySelector(".pagination").innerHTML=paginationHTML;
+//     <nav aria-label="Page navigation example">
+//   <ul class="pagination">
+//     <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+//     <li class="page-item"><a class="page-link" href="#">1</a></li>
+//     <li class="page-item"><a class="page-link" href="#">2</a></li>
+//     <li class="page-item"><a class="page-link" href="#">3</a></li>
+//     <li class="page-item"><a class="page-link" href="#">Next</a></li>
+//   </ul>
+// </nav>
+}
+
+const moveToPage= (pageNum) =>{
+    page=pageNum;
+    console.log("pageNum",pageNum);
+    getNews();
 }
 
 const openSearchBox = () =>{
