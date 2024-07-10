@@ -2,7 +2,7 @@
 let newsList = [];
 const menus = document.querySelectorAll(".menus button");
 menus.forEach(menu =>menu.addEventListener("click",(event)=>getNewsByCategory(event)))
-let url = new URL(`https://study-website-be-bbb1539aa813.herokuapp.com/top-headlines`);
+let url = new URL(`https://refull-news.netlify.app/top-headlines`);
 let totalResult = 0;
 let page = 1;
 const pageSize = 10;
@@ -36,20 +36,20 @@ const getNews =async()=>{
 const getLatestNews = async () => { 
         // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
     //new URL : url 인스턴스를 새로만든다 
-    url = new URL(`https://study-website-be-bbb1539aa813.herokuapp.com/top-headlines`);
+    url = new URL(`https://refull-news.netlify.app/top-headlines`);
     getNews();
 } 
 
 const getNewsByCategory = async(event) =>{
     const category = event.target.textContent.toLowerCase();
     //console.log("category");
-    url = new URL(`https://study-website-be-bbb1539aa813.herokuapp.com/top-headlines?country=kr&category=${category}`);
+    url = new URL(`https://refull-news.netlify.app/top-headlines?country=kr&category=${category}`);
     getNews(); 
 }
 
 const getNewsByKeyword = async() =>{
     const keyword = document.getElementById("search-input").value; 
-    url = new URL(`https://study-website-be-bbb1539aa813.herokuapp.com/top-headlines?country=kr&q=${keyword}`);
+    url = new URL(`https://refull-news.netlify.app/top-headlines?country=kr&q=${keyword}`);
     getNews();
 }
 
