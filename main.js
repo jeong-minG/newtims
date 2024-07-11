@@ -43,6 +43,7 @@ const getLatestNews = async () => {
 const getNewsByCategory = async(event) =>{
     const category = event.target.textContent.toLowerCase();
     //console.log("category");
+    
     url = new URL(`https://refull-news.netlify.app/top-headlines?country=kr&category=${category}`);
     getNews(); 
 }
@@ -68,7 +69,7 @@ const render = ()=>{
                         : news.description
                  }</p>
                     <div>${news.source.name || "no source"} *  ${moment(
-        news.published_date
+        news.publishedAt
      ).fromNow()}</div>
                 </div>
         </div>`).join(" ");
@@ -100,13 +101,12 @@ const paginationRender=()=>{
     //firstPage, 
     const firstPage = lastPage - (groupSize-1)<=0? 1:lastPage - (groupSize-1);
 
-    let paginationHTML=``;
+    let paginationHTML=`<li class="page-item"><a class="page-link" onclick="moveToPage(${page-1})">Previous</a></li>`;
 
     for(let i=firstPage;i<=lastPage;i++){
         paginationHTML+=`<li class="page-item ${i===page? "active":''}"><a class="page-link" onclick="moveToPage(${i})">${i}</a></li>`
     }
-
-
+paginationHTML+=`<li class="page-item"><a class="page-link" onclick="moveToPage(${page+1})">Next</a></li>`
     document.querySelector(".pagination").innerHTML=paginationHTML;
 //     <nav aria-label="Page navigation example">
 //   <ul class="pagination">
