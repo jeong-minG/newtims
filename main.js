@@ -58,7 +58,7 @@ const getNewsByKeyword = async() =>{
 const render = ()=>{
     let newsHtml =newsList.map(
         (news)=>`<div class="row news">
-                <div class="col-lg-4"><img class="news-img-size" src="${news.urlToImage || defaultImage
+                <div class="col-lg-4"><img class="news-img-size mx-auto d-block" src="${news.urlToImage || defaultImage
                 }" onerror="this.onerror=null;this.src='${defaultImage}';"/></div>
                 <div class="col-lg-8">
                     <h2>${news.title}</h2>

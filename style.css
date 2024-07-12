@@ -1,19 +1,30 @@
-.head-line{
-    margin-top: 1em; display: flex; justify-content: center;
+@font-face {
+    font-family: '양진체';
+    src: url('https://fastly.jsdelivr.net/gh/supernovice-lab/font@0.9/yangjin.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
 }
 
-.head-line svg{
-    width:430px;
-}
+*{font-family: 'Pretendard-Regular'; font-size: 16px;}
+
+.head-line{
+    margin-top: 1em; text-align: center;  font-family: '양진체'; font-weight: bold; font-size: 3em;
+} 
 
 .menus{
     margin-top: 1em; display: flex; justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap; font-family: '양진체'; color: #333;
     border-top: 1px solid #ebebeb;
     border-bottom: 4px double #000;
 }
 .menus button{
-    margin: 5px; border: none; background: none;
+    margin: 5px 10px; border: none; background: none;
 }
 
 .menus button:hover{
