@@ -11,7 +11,7 @@
     font-style: normal;
 }
 
-*{font-family: 'Pretendard-Regular'; font-size: 16px;}
+*{font-family: 'Pretendard-Regular'; font-size: 16px; word-break: keep-all;}
 
 .head-line{
     margin-top: 1em; text-align: center;  font-family: '양진체'; font-weight: bold; font-size: 3em;
