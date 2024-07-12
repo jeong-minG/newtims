@@ -2,7 +2,7 @@
 let newsList = [];
 const menus = document.querySelectorAll(".menus button");
 menus.forEach(menu =>menu.addEventListener("click",(event)=>getNewsByCategory(event)))
-let url = new URL(`https://refull-news.netlify.app/top-headlines`);
+let url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines`);
 let totalResult = 0;
 let page = 1;
 const pageSize = 10;
@@ -36,26 +36,26 @@ const getNews =async()=>{
 const getLatestNews = async () => { 
         // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
     //new URL : url 인스턴스를 새로만든다 
-    url = new URL(`https://refull-news.netlify.app/top-headlines`);
-    getNews();
+    url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines`);
+    await getNews();
 } 
 
 const getNewsByCategory = async(event) =>{
     const category = event.target.textContent.toLowerCase();
     //console.log("category");
-    
-    url = new URL(`https://refull-news.netlify.app/top-headlines?country=kr&category=${category}`);
-    getNews(); 
+    page = 1;
+    url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&category=${category}`);
+    await getNews(); 
 }
 
 const getNewsByKeyword = async() =>{
     const keyword = document.getElementById("search-input").value; 
-    url = new URL(`https://refull-news.netlify.app/top-headlines?country=kr&q=${keyword}`);
-    getNews();
+    url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&q=${keyword}`);
+    await getNews();
 }
 
 const render = ()=>{
-    const newsHtml =newsList.map(
+    let newsHtml =newsList.map(
         (news)=>`<div class="row news">
                 <div class="col-lg-4"><img class="news-img-size" src="${news.urlToImage ||
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqEWgS0uxxEYJ0PsOb2OgwyWvC0Gjp8NUdPw&usqp=CAU"
@@ -77,7 +77,7 @@ const render = ()=>{
 }
 
 const errorRender= (errorMessage) =>{
-    const errorHTML=`<div class="alert alert-danger" role="alert">
+    let errorHTML=`<div class="alert alert-danger" role="alert">
   ${errorMessage}
 </div>`
 document.getElementById("news-board").innerHTML=errorHTML;
@@ -87,19 +87,19 @@ document.getElementById("news-board").innerHTML=errorHTML;
 const paginationRender=()=>{
     //totalResult, page, pageSize, groupSize, 
     //totalPage
-    const totalPages = Math.ceil(totalResult/pageSize);
+    let totalPages = Math.ceil(totalResult/pageSize);
     //pageGroup, 
-    const pageGroup = Math.ceil(page/groupSize);
+    let pageGroup = Math.ceil(page/groupSize);
 
     //lastPage,
-    const lastPage = pageGroup*groupSize;
+    let lastPage = pageGroup*groupSize;
     //마지막 페이지그룹이 그룹사이즈보다 작다? 
     if(lastPage>totalPages){
         lastPage=totalPages;
     }
 
     //firstPage, 
-    const firstPage = lastPage - (groupSize-1)<=0? 1:lastPage - (groupSize-1);
+    let firstPage = lastPage - (groupSize-1)<=0? 1:lastPage - (groupSize-1);
 
     let paginationHTML=`<li class="page-item"><a class="page-link" onclick="moveToPage(${page-1})">Previous</a></li>`;
 
