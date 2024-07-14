@@ -38,6 +38,7 @@ const getLatestNews = async () => {
         // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
     //new URL : url 인스턴스를 새로만든다 
     url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines`);
+    page = 1;
     await getNews();
 } 
 
@@ -98,16 +99,23 @@ const paginationRender=()=>{
         lastPage=totalPages;
     }
 
-    //firstPage, 
-    let firstPage = lastPage - (groupSize-1)<=0? 1:lastPage - (groupSize-1);
 
-    let paginationHTML=`<li class="page-item"><a class="page-link" onclick="moveToPage(${page-1})">Previous</a></li>`;
+    //firstPage, 
+    let firstPage = lastPage - (groupSize-1)<=0? 1:lastPage - (groupSize-1); 
+    let paginationHTML=`<li class="page-item"></li>`;
+if(page > 1){
+    paginationHTML=`<li class="page-item"><a class="page-link" onclick="moveToPage(1)">&lt;&lt;</a></li><li class="page-item"><a class="page-link" onclick="moveToPage(${page-1})">&lt;</a></li>`;
+}
 
     for(let i=firstPage;i<=lastPage;i++){
         paginationHTML+=`<li class="page-item ${i===page? "active":''}"><a class="page-link" onclick="moveToPage(${i})">${i}</a></li>`
-    }
-paginationHTML+=`<li class="page-item"><a class="page-link" onclick="moveToPage(${page+1})">Next</a></li>`
-    document.querySelector(".pagination").innerHTML=paginationHTML;
+    } 
+    if (page < totalPages) {
+paginationHTML+=`<li class="page-item"><a class="page-link" onclick="moveToPage(${page+1})">&gt;</a></li><li class="page-item"><a class="page-link" onclick="moveToPage(${totalPages})">&gt;&gt;</a></li>`
+}
+
+ 
+document.querySelector(".pagination").innerHTML=paginationHTML;
 //     <nav aria-label="Page navigation example">
 //   <ul class="pagination">
 //     <li class="page-item"><a class="page-link" href="#">Previous</a></li>

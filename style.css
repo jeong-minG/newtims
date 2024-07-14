@@ -11,10 +11,16 @@
     font-style: normal;
 }
 
-*{font-family: 'Pretendard-Regular'; font-size: 16px; word-break: keep-all;}
+*{font-family: 'Pretendard-Regular'; font-size: 16px;}
 
 .head-line{
     margin-top: 1em; text-align: center;  font-family: '양진체'; font-weight: bold; font-size: 3em;
+    user-drag: none; 
+    -webkit-user-drag: none; 
+    user-select: none; 
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    -ms-user-select: none;
 } 
 
 .menus{
@@ -48,7 +54,7 @@
 }
 
 .news{
-    border-bottom: 2px solid #000; padding: 1em 0;;
+    border-bottom: 2px solid #000; padding: 1em 0; word-break: keep-all;
 }
 
 #input-area{display: none;}
